@@ -18,12 +18,6 @@ import time
 
 import pymysql
 import json
-
-# I want to get the audio of the word,
-# but I found it can’t open the audio with URL directly, so I gave up
-# from playsound import playsound
-################
-
 import requests
 
 print("The Minimum operating environment is Python 3.0")
@@ -212,9 +206,6 @@ def view_starting_letter(word):
     print("You can view up to the first " + str(view_number) + " letters")
     print("the first " + str(view_number) + " letters word is " + word[:view_number])
 
-
-# #########################################################################################################################
-
 # #########################################################################################################################
 
 def view_last_letter(word):
@@ -227,12 +218,11 @@ def view_last_letter(word):
 
 # #########################################################################################################################
 
-# #########################################################################################################################
+
 def word_len(word):
     print("Its length is " + str(len(word)) + ".")
 
 
-# #########################################################################################################################
 
 # #########################################################################################################################
 
