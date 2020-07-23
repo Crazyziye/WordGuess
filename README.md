@@ -26,7 +26,7 @@ I randomized almost all the calculations.
 
 Use the random function to generate random numbers = mysql data id
 
-#### use hint
+#### Use hint
 
 The number of times the prompt is used = int (word length * 0.5)
 
@@ -36,7 +36,7 @@ In the game, you can ask for the first few letters or the last few letters of a 
 
 The number of letters that can be viewed = int (word length * 0.45)
 
-#### chances of guesses（unfinished）
+#### Chances of guesses（unfinished）
 
 The chances of guesses relevant to each word is different.For some reasons I have not finished it yet.
 
