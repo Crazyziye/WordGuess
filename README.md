@@ -36,9 +36,9 @@ In the game, you can ask for the first few letters or the last few letters of a 
 
 The number of letters that can be viewed = int (word length * 0.45)
 
-#### Number of guesses（unfinished）
+#### chances of guesses（unfinished）
 
-The number of guesses relevant to each word is different.For some reasons I have not finished it yet.
+The chances of guesses relevant to each word is different.For some reasons I have not finished it yet.
 
 For example:
 
