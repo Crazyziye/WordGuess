@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # @File       : __Main__.py
-# @Version    : 1.0 21/7/20 10:52 pm
+# @Version    : 1.1 21/7/20 10:52 pm
 # @Email Id   : zhazy119@mymail.unisa.edu,au
 # @Author: Zia
 # @Description: Word Guessing Game by Python
