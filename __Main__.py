@@ -304,8 +304,6 @@ def prompt_Display(word):
 
 # #########################################################################################################################
 # This is the main program,the above are the functions needed to run the program.
-# I closed all statements about ‘time’.
-# This may be because I cannot solve the problem of whether the string passed is a reference or a copy.
 #
 start = True
 get_word_loop = True
