@@ -15,7 +15,6 @@
 import random
 import re
 import time
-
 import pymysql
 import json
 import requests
@@ -204,11 +203,16 @@ def view_starting_letter(word):
         view_number = 1
 
     print("You can view up to the first " + str(view_number) + " letters")
+    time.sleep(2)
     print("the first " + str(view_number) + " letters word is " + word[:view_number])
+
+
+# #########################################################################################################################
 
 # #########################################################################################################################
 
 def view_last_letter(word):
+    # view the last n letters of the word.N is base on word length.
     view_number = int(len(word) * 0.45)
     if view_number < 1:
         view_number = 1
@@ -217,17 +221,16 @@ def view_last_letter(word):
 
 
 # #########################################################################################################################
-
-
 def word_len(word):
+    # only service for display word length.
     print("Its length is " + str(len(word)) + ".")
-
 
 
 # #########################################################################################################################
 
 
 def begin(Time, do='do'):
+    # It just display text which is tell player how many chances to guess and use prompt.
     print("You will have " + str(Time) + " times to " + do + ". Please cherish these opportunities.")
 
 
@@ -238,39 +241,49 @@ print('''
 
 This is a word guessing game.
 
-Although this game may seem simple, what you have to face is a vocabulary with 466k words. So good luck to you.
+Although this game may seem simple, you are facing 466k known words. 
+
+So good luck to you.
 
 If you think the game is too difficult, 
 
-I can consider adding a dictionary function, but only if there are many people who like this game.
+I can consider adding a dictionary function, 
 
-I use random function in many functions, so I don't know what the final result of the game will be. 
+but only if there are many people who like this game.
+
+I use random function in many functions, 
+
+so I don't know what the final result of the game will be. 
 
 I like this feeling and hope you will like it.''')
 
 time.sleep(2)
 
-print(""
-      "Your chance of guessing is different every time. "
-      "The formula for calculating the number of your opportunities is: word length x0.5, "
-      "and then take the integer part."
-      "")
+print('''
+      Your chance of guessing is different every time. 
+      The formula for calculating the number of your opportunities is: word length x0.5, 
+      and then take the integer part.  
+      ''')
 time.sleep(2)
+
 
 # #########################################################################################################################
 # Sorry, this function was closed. If you continue to read, you will know why I closed it.
-# def get_Time(input_word):
-#     return_times = int(len(input_word) * 0.5)
-#     if return_times < 1:
-#         return_times = 1
-#     return return_times
+def get_Time(input_word):
+    return_times = int(len(input_word) * 0.5)
+    if return_times < 1:
+        return_times = 1
+    return return_times
 
 
 # #########################################################################################################################
 
 # Calculate the number of times to use help based on the length of the word
 def prompt_Times_Int(word):
-    prompt_times_int = int(word_len(word) * 0.5)
+    prompt_times_int = int(len(word) * 0.5)
+    if prompt_times_int < 3:
+        prompt_times_int = 2
+
     return prompt_times_int
 
 
@@ -295,157 +308,133 @@ def prompt_Display(word):
 # This may be because I cannot solve the problem of whether the string passed is a reference or a copy.
 #
 start = True
-
+get_word_loop = True
 while start:
     # I want to use the copy function of the dictionary,
     # but the result is not ideal.
-    word_start = {1: get_word()}
 
+    while get_word_loop:
+        # Set variable
+        # Single cycle
+        word_get = get_word()
+        word = word_get
+        times = get_Time(word)
+        prompt_times = prompt_Times_Int(word)
+        prompt_display = prompt_Display(word)
+        prompt_seat_int = prompt_Seat_Int(word)
+        get_word_loop = False
+    #     It must be turned on in order for the loop to run properly
     guess = True
     prompt = True
 
-    while guess:
-        word_dic_copy = word_start.copy()
-        # Test purpose
-        # print("word_dic_copy:" + str(word_dic_copy))
-        word_copy = word_dic_copy[1]
-        word = word_copy
-        # times = get_Time(word)
-        prompt_times = prompt_Seat_Int(word)
-        prompt_display = prompt_Display(word)
-        prompt_seat_int = prompt_Seat_Int(word)
-        # begin(times, 'guess this word')
+    while prompt:
+        # use prompt
+        # base on the number of prompt decide  times of cycle
+        # use number of chances of prompting
+        if prompt_times == 0:
+            prompt = False
+        if times == 0:
+            get_word_loop = True
 
-        if prompt_times < 3:
-            prompt_times = 2
-            # if times == 0:
-            #     guess = False
-            #     word_dic_copy = word_start
-
-            # if times != 0:
-
-            # Test purpose
-            # print(word)
+        begin(times, 'guess this word')
+        time.sleep(2)
+        begin(prompt_times, 'use prompt')
+        time.sleep(2)
+        if prompt_times != 0:
             print('''
-             Before you start guessing, you have the following ways to get clues about this word.
-             a. Word length
-
-             b. The first few letters of the word
-
-             c. The last few letters of the word
-
-             d. Number of occurrences of a letter
-
-             e. Use hint(You only have a limited number of times)
-
-             f. Get pronunciation
-
-             p. pass the Prompt box
-
-             ''')
+                     Before you start guessing, you have the following ways to get clues about this word.
+                     a. Word length
+                     b. The first few letters of the word
+                     c. The last few letters of the word
+                     d. Number of occurrences of a letter
+                     e. Use hint(You only have a limited number of times)
+                     f. Get pronunciation
+                     p. pass the Prompt box
+                     ''')
             time.sleep(2)
-            while prompt:
-                # The prompt loop is used to loop the number of prompts,
-                # if there is no number of prompt times then jump out of the loop
-                # This loop is very successful, and I want to use similar ideas to realize the function of repeating
-                # guessing words, but I have encountered problems with quoting and copying.
+            choose = str(input("Choose what you want to know[a-f and p]: "))
+            time.sleep(2)
+            if choose == "a":
+                prompt_times -= 1
+                word_len(word)
+                print("You still have " + str(prompt_times) + " times to use help")
 
-                begin(prompt_times, "use help")
+            elif choose == 'b':
+                prompt_times -= 1
+                view_starting_letter(word)
+                print("You still have " + str(prompt_times) + " times to use help")
+            elif choose == 'c':
+                prompt_times -= 1
+                view_last_letter(word)
+                print("You still have " + str(prompt_times) + " times to use help")
+            elif choose == 'd':
+                prompt_times -= 1
+                word_count(word)
+                print("You still have " + str(prompt_times) + " times to use help")
+            elif choose == 'e':
+                prompt_times -= 1
+                Hint(prompt_display, prompt_seat_int, word)
+                print("You still have " + str(prompt_times) + " times to use help")
+            elif choose == 'f':
+                prompt_times -= 1
+                #  The try...except statement must be used here,
+                #  because if the api encounters an unlisted word,
+                #  it will return an error. Otherwise, it will cause the game to crash.
+                try:
+                    get_api_pronunciation(word)
 
-                if prompt_times != 0:
-                    choose = str(input("Choose what you want to know: "))
+                except:
+                    print("Not included")
 
-                    if choose == "a":
-                        prompt_times -= 1
-                        word_len(word)
-                        print("You still have " + str(prompt_times) + " times to use help")
+                finally:
+                    print("You still have " + str(prompt_times) + " times to use help")
+            elif choose == 'p':
+                prompt = False
+            else:
+                print("As punishment, you will lose a chance to use prompt and guess this word.")
+                prompt_times = prompt_times - 1
+                times = times - 1
 
-                    elif choose == 'b':
-                        prompt_times -= 1
-                        view_starting_letter(word)
-                        print("You still have " + str(prompt_times) + " times to use help")
-                    elif choose == 'c':
-                        prompt_times -= 1
-                        view_last_letter(word)
-                        print("You still have " + str(prompt_times) + " times to use help")
-                    elif choose == 'd':
-                        prompt_times -= 1
-                        word_count(word)
-                        print("You still have " + str(prompt_times) + " times to use help")
-                    elif choose == 'e':
-                        prompt_times -= 1
-                        Hint(prompt_display, prompt_seat_int, word)
-                        print("You still have " + str(prompt_times) + " times to use help")
-                    elif choose == 'f':
-                        prompt_times -= 1
-                        #  The try...except statement must be used here,
-                        #  because if the api encounters an unlisted word,
-                        #  it will return an error. Otherwise, it will cause the game to crash.
+    while guess:
+        # guess loop: please player input their word which they guess
+        # use number of chances of guessing
+        guessWord = input("What is this word: ")
+        time.sleep(2)
+        if guessWord == word:
+            print('You win')
+            time.sleep(2)
+            ON_OFF = str(input('continue or give up?[c/g] '))
 
-                        try:
-                            get_api_pronunciation(word)
-
-                        except:
-                            print("Not included")
-
-                        finally:
-                            print("You still have " + str(prompt_times) + " times to use help")
-                    elif choose == 'p':
-                        prompt = False
-                    else:
-                        print("As punishment, you will lose a chance to use help.")
-                        print("You still have " + str(prompt_times) + " times to use help")
-                        prompt_times = prompt_times - 1
-                        # times = times - 1
-                if prompt_times == 0:
-                    # jump out the loop
-                    print("You can no longer use help")
-                    prompt = False
-            guessWord = input("What is this word: ")
-            if guessWord == word:
-                # jump out the loop
-                # My idea is to get new words in the start loop,
-                # and reuse the old words in the guess loop.
-                print('You win!!!')
+            if ON_OFF == "c":
+                get_word_loop = True
+            elif ON_OFF == 'g':
                 guess = False
-                word_dic_copy = word_start
-            # if guessWord != word:
-            #     begin(times, 'guess this word')
-
-            print(
-                '''
-        a. continue
-        b. give up
-        ''')
-
-            # This is an anti-violence mechanism, but I did not improve it.
-            # try:
-            play = input("Give up or continue? Please input a or b: ")
-            # except:
-            #     print("You can only input a or b")
-            # else:
-            #     guess = False
-
-            if play == "a":
-
-                # I want to say that if I can't guess the word,
-                # then I can continue to guess the word,
-                # otherwise change to a new word to start the game again.
-
-                # if guessWord != word:
-                #     times = times - 1
-                #     begin(times, 'guess this word')
-                if guessWord == word:
+                prompt = False
+                start = False
+        else:
+            print('You lose')
+            time.sleep(2)
+            ON_OFF = str(input('continue or give up?[c/g] '))
+            if ON_OFF == "c":
+                get_word_loop = False
+                if times == 0:
+                    print('You have no time to guess this word.')
+                    get_word_loop = True
                     guess = False
-                # if player choose give up, the guess loop will stop.
-            if play == "b":
+                if times != 0:
+                    times -= 1
+                    guess = False
+            elif ON_OFF == 'g':
+                # if player choose give up, all loop will off.
                 guess = False
-
-
-    else:
-        # if player choose give up, the game will stop.
-        if play == 'b':
-            print("See you later!!!")
-            start = False
+                prompt = False
+                start = False
+            else:
+                # if player input others value, all loop will off.
+                print("please input 'c' or 'g'!!")
+                print("The game will over.")
+                guess = False
+                prompt = False
+                start = False
 
 # #########################################################################################################################
