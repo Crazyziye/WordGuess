@@ -401,7 +401,7 @@ while start:
         guessWord = input("What is this word: ")
         time.sleep(2)
         if guessWord == word:
-            print('You win')
+            print('WOW!!YOU ARE REALLY GOOD')
             time.sleep(2)
             ON_OFF = str(input('continue or give up?[c/g] '))
 
@@ -412,7 +412,7 @@ while start:
                 prompt = False
                 start = False
         else:
-            print('You lose')
+            print('Sorry,Good luck next time!!')
             time.sleep(2)
             ON_OFF = str(input('continue or give up?[c/g] '))
             if ON_OFF == "c":
